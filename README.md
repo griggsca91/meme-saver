@@ -1,6 +1,6 @@
-#Meme-saver
+# Meme-saver
 
-##About
+## About
 
 This is just a nice little screensaver like webpage that you can use for your twitch overlay.  The purpose is if you go away you can put up a screen letting your chat know you're gone, but this will provide some entertainment by pulling a random gif from Giphy.
 
