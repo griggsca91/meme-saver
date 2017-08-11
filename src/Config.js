@@ -1,3 +1,9 @@
 export const Config = {
-    giphyAPI : ""
+    giphyAPI : "",
+    interval : 15,
+    tags: [
+        "dank meme",
+        "bugs",
+        "howdy"
+    ]
 };

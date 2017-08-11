@@ -3,6 +3,11 @@ import './App.css';
 import BigBooty from 'superagent'; 
 import  {Config} from './Config.js';
 
+function getRandomTag() {
+  let randomIndex = Math.floor(Math.random() * (Config.tags.length));
+  return Config.tags[randomIndex];
+}
+
 
 class App extends Component {
 
@@ -25,12 +30,19 @@ class App extends Component {
     this.getRandomGIF();
     this.animateIMG = this.animateIMG.bind(this);
     setInterval(this.animateIMG, 50);
-    setInterval(this.getRandomGIF, 10*1000);
+    setInterval(this.getRandomGIF, Config.interval*1000);
   }
+
 
   getRandomGIF() {
 
-    let url = "https://api.giphy.com/v1/gifs/random?api_key=" + Config.giphyAPI + "&tag=dank%20meme"
+    let randomTag = encodeURI(getRandomTag());
+    console.log("Getting gif with random tag: ", randomTag);
+
+    let url = `https://api.giphy.com/v1/gifs/random?` +
+          `api_key=${Config.giphyAPI}` +
+          `&rating=g` +
+          `&tag=${randomTag}`;
 
       BigBooty.get(url).end((err, res) => {
         console.log( res.body.data.image_url)
@@ -44,7 +56,6 @@ class App extends Component {
 
 
   animateIMG() {
-    console.log("animateIMG")
 
     this.img = document.getElementById("stupid");
     this.setState((prevState) => {
@@ -57,9 +68,6 @@ class App extends Component {
       let goingDown = prevState.goingDown;
       let goingLeft = prevState.goingLeft;
 
-    console.log("window.innerHeight", window.innerHeight, top);
-    console.log("window.innerWidth", window.innerWidth, right);
-    console.log("img.getBoundingClientRect(): ", this.img.getBoundingClientRect());
       if (goingDown) {
         goingDown = window.innerHeight >= this.img.getBoundingClientRect().bottom;
         top = top + 5;
